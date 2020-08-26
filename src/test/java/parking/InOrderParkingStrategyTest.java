@@ -19,10 +19,6 @@ public class InOrderParkingStrategyTest {
 
 	@Test
     public void testCreateReceipt_givenACarAndAParkingLog_thenGiveAReceiptWithCarNameAndParkingLotName() throws InvocationTargetException, IllegalAccessException {
-
-	    /* Exercise 1, Write a test case on InOrderParkingStrategy.createReceipt()
-	    * With using Mockito to mock the input parameter */
-
         //given
         InOrderParkingStrategy inOrderParkingStrategy = new InOrderParkingStrategy();
         ParkingLot parkingLot = mock(ParkingLot.class);
@@ -38,10 +34,20 @@ public class InOrderParkingStrategyTest {
     }
 
     @Test
-    public void testCreateNoSpaceReceipt_givenACar_thenGiveANoSpaceReceipt() {
+    public void testCreateNoSpaceReceipt_givenACar_thenGiveANoSpaceReceipt() throws InvocationTargetException, IllegalAccessException {
 
         /* Exercise 1, Write a test case on InOrderParkingStrategy.createNoSpaceReceipt()
          * With using Mockito to mock the input parameter */
+        //given
+        InOrderParkingStrategy inOrderParkingStrategy = new InOrderParkingStrategy();
+        Car car = mock(Car.class);
+        when(car.getName()).thenReturn("car");
+        //when
+        Method method = PowerMockito.method(InOrderParkingStrategy.class,"createNoSpaceReceipt",Car.class);
+        Receipt receipt = (Receipt)method.invoke(inOrderParkingStrategy, car);
+        //then
+        assertEquals("car",receipt.getCarName());
+        assertEquals("No Parking Lot",receipt.getParkingLotName());
 
     }
 
