@@ -2,15 +2,28 @@ package parking;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
+
 
 public class VipParkingStrategyTest {
 
 	@Test
     public void testPark_givenAVipCarAndAFullParkingLog_thenGiveAReceiptWithCarNameAndParkingLotName() {
+        //given
+        VipParkingStrategy vipParkingStrategy = spy(new VipParkingStrategy());
+        ParkingLot parkingLot = mock(ParkingLot.class);
+        Car car = mock(Car.class);
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        //when
+        doReturn(false).when(parkingLot).isFull();
 
-	    /* Exercise 4, Write a test case on VipParkingStrategy.park()
-	    * With using Mockito spy, verify and doReturn */
+        Receipt receipt = vipParkingStrategy.park(parkingLots,car);
+        //then
+        verify(vipParkingStrategy,times(1)).createReceipt(parkingLot,car);
 
     }
 
