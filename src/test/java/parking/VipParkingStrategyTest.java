@@ -6,9 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +55,6 @@ public class VipParkingStrategyTest {
 
     @Test
     public void testIsAllowOverPark_givenCarNameContainsCharacterAAndIsVipCar_thenReturnTrue(){
-
-        /* Exercise 5, Write a test case on VipParkingStrategy.isAllowOverPark()
-         * You may refactor the code, or try to use
-         * use @RunWith(MockitoJUnitRunner.class), @Mock (use Mockito, not PowerMock) and @InjectMocks
-         */
         //given
         Car car = mock(Car.class);
         when(car.getName()).thenReturn("A");
@@ -76,10 +68,14 @@ public class VipParkingStrategyTest {
     @Test
     public void testIsAllowOverPark_givenCarNameDoesNotContainsCharacterAAndIsVipCar_thenReturnFalse(){
 
-        /* Exercise 5, Write a test case on VipParkingStrategy.isAllowOverPark()
-         * You may refactor the code, or try to use
-         * use @RunWith(MockitoJUnitRunner.class), @Mock (use Mockito, not PowerMock) and @InjectMocks
-         */
+        //given
+        Car car = mock(Car.class);
+        when(car.getName()).thenReturn("B");
+        when(carDao.isVip(car.getName())).thenReturn(true);
+        //when
+        Boolean flag = vipParkingStrategy.isAllowOverPark(car);
+        //then
+        assertEquals(false,flag);
     }
 
     @Test
