@@ -1,14 +1,26 @@
 package parking;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-
-
+@RunWith(MockitoJUnitRunner.class)
 public class VipParkingStrategyTest {
+    @Mock
+    CarDao carDao;
+    @InjectMocks
+    VipParkingStrategy vipParkingStrategy;
 
 	@Test
     public void testPark_givenAVipCarAndAFullParkingLog_thenGiveAReceiptWithCarNameAndParkingLotName() {
@@ -29,9 +41,6 @@ public class VipParkingStrategyTest {
 
     @Test
     public void testPark_givenCarIsNotVipAndAFullParkingLog_thenGiveNoSpaceReceipt() {
-
-        /* Exercise 4, Write a test case on VipParkingStrategy.park()
-         * With using Mockito spy, verify and doReturn */
 
         //given
         VipParkingStrategy vipParkingStrategy = spy(new VipParkingStrategy());
@@ -54,6 +63,14 @@ public class VipParkingStrategyTest {
          * You may refactor the code, or try to use
          * use @RunWith(MockitoJUnitRunner.class), @Mock (use Mockito, not PowerMock) and @InjectMocks
          */
+        //given
+        Car car = mock(Car.class);
+        when(car.getName()).thenReturn("A");
+        when(carDao.isVip(car.getName())).thenReturn(true);
+        //when
+        Boolean flag = vipParkingStrategy.isAllowOverPark(car);
+        //then
+        assertEquals(true,flag);
     }
 
     @Test
